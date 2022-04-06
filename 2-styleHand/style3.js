@@ -1,7 +1,7 @@
-export default class style1 {
+import Style from "./style.js";
+export default class Style1 extends Style {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x,y);
     }
 
     update() {
