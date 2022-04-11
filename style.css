@@ -3,10 +3,18 @@
     position: absolute;
     display: block;
     z-index: 1;
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .output_canvas {
-    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.p5Canvas {
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .container {

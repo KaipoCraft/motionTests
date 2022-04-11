@@ -1,13 +1,19 @@
 const videoElement = document.getElementsByClassName('input_video')[0];
 let width = 1280;
 let height = 720;
+let fr;
 
 window.setup = function() {
     createCanvas(width, height);
+    
 }
 
 window.draw = function() {
     background(220);
+    push();
+        translate(width*2, height+20);
+        fr = print(floor(frameRate()));
+    pop();
 }
 
 // Mediapipe Stuff //
