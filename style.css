@@ -1,7 +1,7 @@
 .input_video {
     width: 300px;
     position: absolute;
-    display: block;
+    display: none;
     z-index: 1;
     -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
