@@ -20,36 +20,17 @@ export default class Style1 {
         for (let i = 0; i < this.pointList.length; i++) {
             // Runs through each detected hand
             for (let j = 0; j < this.pointList[i].length; j++) {
-                //ellipse(this.pointList[i][j].x, this.pointList[i][j].y, 100);
-                vertex(this.pointList[i][j].x, this.pointList[i][j].y);
+                    let linePoint = new LinePoints(this.pointList[i][j], this.width, this.height, this.lifespan);
+                    linePoint.draw();
+                    linePoint.update();
             }
         }
         endShape();
 
-        // for (let i = particles.length - 1; i >= 0; i--) {
-        //     if (particles[i].finished()) {
-        //       particles.splice(i, 1);
-        //     }
-        // }
     }
 
     update() {
-        // Runs through the list of previous detected points
-        for (let i = 0; i < this.pointList.length; i++) {
-            // Runs through each detected hand
-            for (let j = 0; j < this.pointList[i].length; j++) {
-                if (this.pointList[i][j].x != null) {
-                    this.pointList[i][j].x += 10;
-                    print(this.pointList[i][j].x);
-                }
-            }
-        }
 
-        this.lifespan -= 10;
-    }
-
-    finished() {
-        return this.lifespan < 0;
     }
 
     /**

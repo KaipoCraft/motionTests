@@ -44,7 +44,6 @@ window.draw = function() {
 
         drawStyle.updatePoint = indexPoints;
         drawStyle.draw();
-        drawStyle.update();
     }
 
     //--------------------------------------//

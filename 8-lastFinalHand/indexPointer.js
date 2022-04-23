@@ -13,6 +13,8 @@ export default class Pointer {
     draw() {
         
         for (let i = 0; i < this.point.length; i++) {
+
+            if (this.point[i].x != null) {
             
             push();
                 translate(this.point[i].x, this.point[i].y);
@@ -35,6 +37,8 @@ export default class Pointer {
                 pop();
 
             pop();
+
+            }
 
         }
         

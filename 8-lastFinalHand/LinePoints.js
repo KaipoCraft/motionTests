@@ -1,22 +1,22 @@
 export default class LinePoints {
-    constructor(x, y, width, height, lifespan) {
-        this.x = x;
-        this.y = y;
+    constructor(point, width, height, lifespan) {
+        this.point = point;
         this.width = width;
         this.height = height;
         this.lifespan = lifespan;
     }
 
     draw() {
-        ellipse(this.x, this.y, 100);
-    }
-    get vector() {
-        let v = createVector(this.x, this.y);
-        return (v);
+        if (this.point.x != null) {
+            ellipse(this.point.x, this.point.y, 10);
+            vertex(this.point.x, this.point.y);
+        }
     }
 
     update() {
-        this.x += 10;
+        if (this.point.x != null) {
+            this.point.x += 10;
+        }
     }
 
     finished() {
