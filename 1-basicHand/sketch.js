@@ -3,16 +3,21 @@ const videoElement = document.getElementsByClassName('input_video')[0];
 let width = 1280;
 let height = 720;
 
+let mp = new Mediapipe();
+mp.runMediapipe();
+if (mp.index != null) {
+    console.log(mp.index);
+}
+
+
 window.setup = function() {
     createCanvas(width, height);
 }
 
 window.draw = function() {
     background(220);
+    //console.log(mp.indexTipPoint);
 }
-
-let mp = new Mediapipe;
-mp.runMediapipe();
 
 const hands = new Hands({locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;

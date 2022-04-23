@@ -1,8 +1,14 @@
+// Troubleshooting -
+// Can't seem to change "indeTipPoints" in the rest of code
+// Scope issue?
+
 export default class Mediapipe {
     constructor() {
+        this.indexTipPoint = [0, 0];
     }
 
     runMediapipe() {
+        //let indexTipPoint;
         window.onResults = function(results) {
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
@@ -37,9 +43,17 @@ export default class Mediapipe {
                         }
         
                         line(x, y, next.x*width, next.y*height);
+
+                        
                     }
+                    //indexTipPoint = landmarks[8];
+                    //console.log(indexTipPoint);
                 }
             }
         }
+    }
+
+    get index() {
+        return this.indexTipPoint;
     }
 }

@@ -1,9 +1,6 @@
-// Make a list of points to feed the styles?
-// How to make one instance of the object and keep adding to it?
-// Make object, it takes list of points
-
 import IndexPointer from "./indexPointer.js";
 import Button from "./button.js";
+import DragLine from "./LinePoints.js";
 import Style1 from "./style1.js";
 import Style2 from "./style2.js";
 import Style3 from "./style3.js";
@@ -12,11 +9,12 @@ let width = 1280;               // Width of the canvas
 let height = 720;               // Height of the canvas
 let c;                          // Hand Line Color
 let button1, button2, button3;
-let indexPoints = [0, 0];
+let indexPoints;
+// let dragLineList = [];   Now in Style1
+let thickness = 1;
 let btnMargin = 30;
 let backColor = [155,100,100];
 let curStyle = Style1;
-let drawStyle;
 
 //--------------------------------------//
 //--------------P5 Setup----------------//
@@ -24,20 +22,38 @@ let drawStyle;
 window.setup = function() {
     createCanvas(width, height);
     c = color(250,250,250);
-    startStyle();
-}
-
-window.startStyle = function() {
-    drawStyle = new curStyle(indexPoints[0], indexPoints[1]);
 }
 
 //--------------------------------------//
 //---------------P5 Draw----------------//
 //--------------------------------------//
 window.draw = function() {
-
+    // Draw a line eminating from the index tip
+    // The line's x keeps growing incrementally, while the y equals the y value of the index tip
     background(backColor);
-    
+
+    if (indexPoints != null) {
+        dragLineList.push(new DragLine(indexPoints.x, indexPoints.y));
+    }
+
+    beginShape();
+    let xoff = 0;
+    for (let i = 0; i < dragLineList.length; i++) {
+        noFill();
+        stroke(255);
+        strokeWeight(thickness);
+        let p = dragLineList[i].draw();
+        //let pNoise = map(noise(xoff), 0, 1, 0, 50);
+        //let sNoise = map(sin(p.x),-1,1,0,50);
+        vertex(p.x, p.y);
+        dragLineList[i].update();
+        if (dragLineList[i].finished()) {
+            dragLineList.splice(i, 1);
+        }
+        xoff += 1;
+    }
+    endShape();
+
     //--------------------------------------//
     //---------------Buttons----------------//
     //--------------------------------------//
@@ -51,8 +67,6 @@ window.draw = function() {
     button3 = new Button(btnMargin, area2[2]+btnMargin, 'Style 3');
     let area3 = button3.getArea();
     button3.draw();
-
-    
 
     // Button 1 activation and action
     if (indexPoints != null) {
@@ -125,13 +139,10 @@ window.onResults = function(results) {
 
                 line(x, y, next.x*width, next.y*height);
             }
-            
-            indexPoints = [landmarks[8].x*width, landmarks[8].y*height];
-            new IndexPointer(indexPoints[0], indexPoints[1]).draw();
 
-            // Troubleshooting - keeps making new instance every loop, can't make list
-            // drawStyle.draw();
-            drawStyle.update();
+            new IndexPointer(landmarks[8].x*width, landmarks[8].y*height).draw();
+
+            indexPoints = createVector(landmarks[8].x*width, landmarks[8].y*height);
         }
     }
 }

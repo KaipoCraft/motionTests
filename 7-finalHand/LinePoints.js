@@ -1,13 +1,16 @@
 export default class LinePoints {
-    constructor(x, y) {
+    constructor(x, y, width, height, lifespan) {
         this.x = x;
         this.y = y;
+        this.width = width;
+        this.height = height;
+        this.lifespan = lifespan;
     }
 
     draw() {
         ellipse(this.x, this.y, 100);
     }
-    getVector() {
+    get vector() {
         let v = createVector(this.x, this.y);
         return (v);
     }
@@ -17,6 +20,6 @@ export default class LinePoints {
     }
 
     finished() {
-        return this.x >= width + 20;
+        return this.x >= width;
     }
 }
