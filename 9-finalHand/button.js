@@ -40,10 +40,6 @@ export default class Button {
         return a;
     }
 
-    get btnStatus() {
-
-    }
-
     activated() {
         fill(0);
         noStroke();

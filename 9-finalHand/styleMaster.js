@@ -13,30 +13,25 @@ export default class StyleMaster {
     drawCurStyle() {
         let drawStyle = new this.curStyle(this.pointList);
         drawStyle.draw();
-        //console.log(this.pointList);
+        // new Style2(this.pointList).draw();
     }
 
-    changeStyle() {
-        console.log(this.curStyle);
-        if (this.curStyle = Style1) {
-            this.curStyle = Style2;
-        } else if (this.curStyle = Style2) {
-            this.curStyle = Style3;
-        } else {
-            this.curStyle = Style1;
-        }
-    }
-
-    /**
-     * @param {any} x
-     */
-     set updatePoint(point) {
-        if (point[0] != null) {
-            this.pointList.push(point);
-        }
+    changeStyle(newStyle) {
+        this.curStyle = this.styles[newStyle];
+        this.pointList = [];
     }
 
     get styleNum() {
         return this.styles.length;
     }
+    set updatePoint(point) {
+        if (point[0] != null) {
+            this.pointList.push(point);
+        }
+    }
+    set updateStyle(newStyle) {
+        this.curStyle = this.styles[newStyle-1];
+        console.log(this.curStyle);
+    }
+
 }

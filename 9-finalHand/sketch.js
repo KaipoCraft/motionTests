@@ -60,6 +60,8 @@ window.draw = function() {
             {
                 console.log("Button " + i + " pressed!");
                 btn.activated();
+                let newStyle = i;
+                drawStyle.updateStyle = newStyle;
             }
         }
     }
