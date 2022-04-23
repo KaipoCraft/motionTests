@@ -4,9 +4,11 @@
 
 import Pointer from "./indexPointer.js";
 import Button from "./button.js";
+import StyleMaster from "./styleMaster.js";
 import Style1 from "./style1.js";
 import Style2 from "./style2.js";
 import Style3 from "./style3.js";
+import StyleMaster from "./styleMaster.js";
 
 const videoElement = document.getElementsByClassName('input_video')[0];
 
@@ -17,6 +19,7 @@ let button1, button2, button3;
 let indexPoints = [0, 0];
 let btnMargin = 30;
 let backColor = [155,100,100];
+let StyleList = [Style1, Style2, Style3];
 let CurStyle = Style1;
 let drawStyle;
 let pointer;
@@ -27,7 +30,12 @@ let pointer;
 window.setup = function() {
     createCanvas(width, height);
     c = color(250,250,250);
-    pointer = new Pointer(indexPoints.x, indexPoints.y);
+    pointer = new Pointer(indexPoints);
+
+    // Troubleshooting: need to make an object that holds all the styles
+    // Then call function "changeStyle" when button is activated
+    // This will make me able to create one instance of that object in here
+
     drawStyle = new CurStyle(indexPoints, width, height);
 }
 
@@ -44,6 +52,7 @@ window.draw = function() {
 
         drawStyle.updatePoint = indexPoints;
         drawStyle.draw();
+        drawStyle.update();
     }
 
     //--------------------------------------//
@@ -57,51 +66,67 @@ window.draw = function() {
         button3 = new Button(btnMargin, area2[2]+btnMargin, 'Style 3');
         let area3 = button3.getArea();
 
-        // Button 1 activation and action
-        if (indexPoints != null) {
-            if (indexPoints.y >=  area1[0] 
-                && indexPoints.x <= area1[1]
-                && indexPoints.y <= area1[2]
-                && indexPoints.x >= area1[3]) 
-                {
-                button1.activated();
-                backColor = [100,155,100];
-                if (CurStyle !== Style1) {
-                    CurStyle = Style1;
+        // Makes sure there is at least one hand detected
+        if (indexPoints[0] != null)  {
+            // Runs through each detected hand
+            for (let i = 0; i < indexPoints.length; i++) {
+                // If hand gets close to right side, show buttons
+                if (indexPoints[i].x <= width/3) {
+                    button1.draw();
+                    button2.draw();
+                    button3.draw();
                 }
-                console.log(CurStyle);
-            }
-        }
-        // Button 2 activation and action
-        if (indexPoints != null) {
-            if (indexPoints.y >=  area2[0] 
-                && indexPoints.x <= area2[1]
-                && indexPoints.y <= area2[2]
-                && indexPoints.x >= area2[3]) 
-                {
-                button2.activated();
-                backColor = [100,155,155];
-                if (CurStyle !== Style2) {
-                    CurStyle = Style2;
+
+                if (indexPoints[i].y >=  area1[0] 
+                    && indexPoints[i].x <= area1[1]
+                    && indexPoints[i].y <= area1[2]
+                    && indexPoints[i].x >= area1[3]) 
+                    {
+                    button1.activated();
+                    backColor = [100,155,100];
+                    if (CurStyle !== Style1) {
+                        CurStyle = Style1;
+                    }
+                    console.log(CurStyle);
                 }
-                console.log(CurStyle);
-            }
-        }
-        // Button 3 activation and action
-        if (indexPoints != null) {
-            if (indexPoints.y >=  area3[0] 
-                && indexPoints.x <= area3[1]
-                && indexPoints.y <= area3[2]
-                && indexPoints.x >= area3[3]) 
-                {
-                button3.activated();
-                backColor = [100,100,155];
-                if (CurStyle !== Style3) {
-                    CurStyle = Style3;
+
+                if (indexPoints[i].y >=  area2[0] 
+                    && indexPoints[i].x <= area2[1]
+                    && indexPoints[i].y <= area2[2]
+                    && indexPoints[i].x >= area2[3]) 
+                    {
+                    button2.activated();
+                    backColor = [100,155,155];
+                    if (CurStyle !== Style2) {
+                        CurStyle = Style2;
+                    }
+                    console.log(CurStyle);
                 }
-                console.log(CurStyle);
+
+                if (indexPoints[i].y >=  area3[0] 
+                    && indexPoints[i].x <= area3[1]
+                    && indexPoints[i].y <= area3[2]
+                    && indexPoints[i].x >= area3[3]) 
+                    {
+                    button3.activated();
+                    backColor = [100,100,155];
+                    if (CurStyle !== Style3) {
+                        CurStyle = Style3;
+                    }
+                    console.log(CurStyle);
+                }
             }
+        } else {
+            // Troubleshooting: text won't show when flipped
+            push();
+                    scale(-1,1);
+                    translate(width/2, height/2);
+                    textSize(30);
+                    fill(255);
+                    text('Show Hands', 0, 0);
+            pop();
         }
+
         indexPoints = [];
 }
 
@@ -130,19 +155,9 @@ window.onResults = function(results) {
 
                 line(x, y, next.x*width, next.y*height);
             }
-            
-            //for (let hand in results.multiHandLandmarks) {
-                //print(hand);
-                indexPoints.push(createVector(landmarks[8].x*width, landmarks[8].y*height));
-            //}
-            
-            // indexPointList.push(indexPoints);
-            //new IndexPointer(indexPoints.x, indexPoints.y).draw();
-        }
-        if (indexPoints.x <= width/3) {
-            button1.draw();
-            button2.draw();
-            button3.draw();
+
+            indexPoints.push(createVector(landmarks[8].x*width, landmarks[8].y*height));
+
         }
     }
 }
