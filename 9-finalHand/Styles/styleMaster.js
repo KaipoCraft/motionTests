@@ -13,12 +13,10 @@ export default class StyleMaster {
     drawCurStyle() {
         let drawStyle = new this.curStyle(this.pointList);
         drawStyle.draw();
-        // new Style2(this.pointList).draw();
     }
 
-    changeStyle(newStyle) {
-        this.curStyle = this.styles[newStyle];
-        this.pointList = [];
+    empty() {
+        this.pointList.splice(0);
     }
 
     get styleNum() {
@@ -30,8 +28,11 @@ export default class StyleMaster {
         }
     }
     set updateStyle(newStyle) {
-        this.curStyle = this.styles[newStyle-1];
-        console.log(this.curStyle);
+        if (this.curStyle != this.styles[newStyle-1]) {
+            this.curStyle = this.styles[newStyle-1];
+            console.log(this.curStyle);
+        }
+        
     }
 
 }

@@ -2,9 +2,9 @@
 // Make the styles a part of an array
 // Buttons change which style is in effect in array
 
-import Pointer from "./pointer.js";
-import Button from "./button.js";
-import StyleMaster from "./styleMaster.js";
+import Pointer from "./UI/pointer.js";
+import Button from "./UI/button.js";
+import StyleMaster from "./Styles/styleMaster.js";
 
 const videoElement = document.getElementsByClassName('input_video')[0];
 
@@ -60,8 +60,11 @@ window.draw = function() {
             {
                 console.log("Button " + i + " pressed!");
                 btn.activated();
+                
+                drawStyle.empty();
                 let newStyle = i;
                 drawStyle.updateStyle = newStyle;
+                
             }
         }
     }

@@ -1,9 +1,8 @@
 export default class LinePoints {
-    constructor(point, lifespan) {
+    constructor(point) {
         this.point = point;
         this.width = width;
         this.height = height;
-        this.lifespan = lifespan;
         this.start = 0;
         this.y;
         this.inc = 0.01;
@@ -27,7 +26,7 @@ export default class LinePoints {
     finished() {
         return this.point.x >= width;
     }
-
+    
     // Make a function to calculate the perlin noise value
     // for each point. 
     calcNoise() {
