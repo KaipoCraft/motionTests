@@ -12,7 +12,7 @@ let width = 1280;               // Width of the canvas
 let height = 720;               // Height of the canvas
 let c;                          // Hand Line Color
 let indexPoints = [];
-let backColor = [155,100,100];
+let backColor;
 let drawStyle;
 let pointer;
 
@@ -21,12 +21,12 @@ let pointer;
 //--------------------------------------//
 window.setup = function() {
     createCanvas(width, height);
-    c = color(250,250,250);
-    pointer = new Pointer(indexPoints);
 
-    // Troubleshooting: need to make an object that holds all the styles
-    // Then call function "changeStyle" when button is activated
-    // This will make me able to create one instance of that object in here
+    // Declare all colors
+    backColor = color(100,100,110);
+    c = color(250,250,250);
+    
+    pointer = new Pointer(indexPoints);
 
     drawStyle = new StyleMaster(indexPoints);
 }

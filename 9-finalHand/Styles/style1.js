@@ -1,4 +1,4 @@
-import LinePoints from "./LinePoints.js";
+import LinePoints from "./linePoints.js";
 export default class Style1 {
     constructor(pointList) {
         this.pointList = pointList;
