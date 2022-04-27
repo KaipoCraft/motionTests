@@ -1,20 +1,25 @@
-// Make a setter function for the objects
-// Make the styles a part of an array
-// Buttons change which style is in effect in array
+// Neill Kaipo Shikada
+// ATLAS Institute
+// University of Colorado Boulder
 
 import Pointer from "./UI/pointer.js";
 import Button from "./UI/button.js";
 import StyleMaster from "./Styles/styleMaster.js";
+import Mediapipe from "../MediapipeHands.js";
+import { scalePoints } from "./functions.js";
 
 const videoElement = document.getElementsByClassName('input_video')[0];
 
 let width = 1280;               // Width of the canvas
 let height = 720;               // Height of the canvas
 let c;                          // Hand Line Color
-let indexPoints = [];
+
 let backColor;
 let drawStyle;
 let pointer;
+let mp = new Mediapipe();
+let indexPoints = [];
+let thumbPoints = [];
 
 //--------------------------------------//
 //--------------P5 Setup----------------//
@@ -25,7 +30,7 @@ window.setup = function() {
     // Declare all colors
     backColor = color(100,100,110);
     c = color(250,250,250);
-    
+
     pointer = new Pointer(indexPoints);
 
     drawStyle = new StyleMaster(indexPoints);
@@ -35,15 +40,20 @@ window.setup = function() {
 //---------------P5 Draw----------------//
 //--------------------------------------//
 window.draw = function() {
+    indexPoints = scalePoints(mp.index);
+    thumbPoints = scalePoints(mp.thumb);
 
     background(backColor);
+    if (drawStyle.styleBackground != null) {
+        background(drawStyle.styleBackground);
+    }
 
     pointer.draw();
     pointer.updatePoint = indexPoints;
 
     // Makes button to change between styles
     for (let i = 1; i <= drawStyle.styleNum; i++) {
-        //ellipse(width/4, height/(drawStyle.styleNum+1)*i, 50);
+
         let btnMargin = 20;
         let btnX = 0 + btnMargin;
         let btnY = height/(drawStyle.styleNum)*(i-1) + btnMargin;
@@ -62,15 +72,17 @@ window.draw = function() {
                 btn.activated();
                 
                 drawStyle.empty();
-                let newStyle = i;
-                drawStyle.updateStyle = newStyle;
+                //let newStyle = i;
+                //drawStyle.updateStyle = newStyle;
+                drawStyle.setStyleIndex = i;
                 
             }
         }
     }
     
     drawStyle.drawCurStyle();
-    drawStyle.updatePoint = indexPoints;
+    drawStyle.updateIndexPoint = indexPoints;
+    drawStyle.updateThumbPoint = thumbPoints;
 
     indexPoints = [];
 }
@@ -78,34 +90,8 @@ window.draw = function() {
 //--------------------------------------//
 //--------------Mediapipe---------------//
 //--------------------------------------//
-window.onResults = function(results) {
-    if (results.multiHandLandmarks) {
-        for (const landmarks of results.multiHandLandmarks) {
-            
-            stroke(c);
-            strokeWeight(2);
-            var palm = [0,1,5,9,13,17];
-            for (var j = 0; j < landmarks.length; j++) {
-                let x = landmarks[j].x*width;
-                let y = landmarks[j].y*height;
-                ellipse(x,y,2);
 
-                var isPalm = palm.indexOf(j);
-                var next;
-                if (isPalm == -1) {
-                    next = landmarks[j-1];
-                } else {
-                    next = landmarks[palm[(isPalm+1)%palm.length]];
-                }
-
-                line(x, y, next.x*width, next.y*height);
-            }
-
-            indexPoints.push(createVector(landmarks[8].x*width, landmarks[8].y*height));
-
-        }
-    }
-}
+mp.runMediapipe();
 
 const hands = new Hands({locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;

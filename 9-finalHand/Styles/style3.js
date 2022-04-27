@@ -4,6 +4,7 @@ export default class Style3 {
     constructor(pointList) {
         this.pointList = pointList;
         this.particleList = [];
+        this.background = [0,255,0];
     }
 
     draw() {

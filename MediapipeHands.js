@@ -5,10 +5,11 @@
 export default class Mediapipe {
     constructor() {
         this.indexTipPoint = [];
+        this.thumbTipPoint = [];
     }
 
     runMediapipe() {
-        window.onResults = function(results) {
+        window.onResults = (results) => {
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
                     let c = color(250,250,250);
@@ -45,7 +46,9 @@ export default class Mediapipe {
 
                         
                     }
-                    this.updatePoint = landmarks[8];
+                   
+                    this.indexTipPoint = landmarks[8];
+                    this.thumbTipPoint = landmarks[4];
                 }
             }
         }
@@ -54,13 +57,7 @@ export default class Mediapipe {
     get index() {
         return this.indexTipPoint;
     }
-
-    /**
-     * @param {any} x
-     */
-     set updatePoint(point) {
-        if (point != null) {
-            this.indexTipPoint.push(point);
-        }
+    get thumb() {
+        return this.thumbTipPoint;
     }
 }

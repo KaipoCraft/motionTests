@@ -3,50 +3,39 @@ import Style2 from "./style2.js";
 import Style3 from "./style3.js";
 
 export default class StyleMaster {
-    constructor() {
-        this.point;
-        this.pointList = [];
-        this.curStyle = Style1;
-        this.styles = [Style1, Style2, Style3];
+    constructor() { 
+        this.indexPoint;
+        this.thumbPoint;
+        
+        this.styles = [new Style1(this.indexPoint), new Style2(this.indexPoint), new Style3(this.indexPoint)];
+        this.curStyle = this.styles[0];
     }
 
-    // Can't make a particle system if the objects keep
-    // recreating themselves, would need to "push"
-    // for Style3 to be a particle system
     drawCurStyle() {
-        let drawStyle = new this.curStyle(this.pointList);
-        // let drawStyle = [];
-        // for (let i = 0; i < this.pointList; i++) {
-        //     drawStyle.push(new this.curStyle(this.pointList[i]));
-        // }
-        drawStyle.draw();
-    }
-
-    // Try to get the particle system over here to this function
-    setupCurStyle() {
-        let setupStyle = [];
-        setupStyle.push(new this.curStyle(this.point));
-        setupStyle.draw();
+        this.curStyle.draw();
+        this.curStyle.indexPoint = this.indexPoint;
     }
 
     empty() {
-        this.pointList.splice(0);
+        this.indexPointList.splice(0);
     }
 
     get styleNum() {
         return this.styles.length;
     }
-    set updatePoint(point) {
+    get current() {
+        return this.curStyle;
+    }
+    set updateIndexPoint(point) {
+        this.indexPoint = point;
+    }
+    set updateThumbPoint(point) {
         if (point[0] != null) {
-            this.pointList.push(point);
+            this.thumbPoint = point;
         }
     }
-    set updateStyle(newStyle) {
-        if (this.curStyle != this.styles[newStyle-1]) {
-            this.curStyle = this.styles[newStyle-1];
-            console.log(this.curStyle);
-        }
-        
+    set setStyleIndex(i) {
+        this.curStyle = this.styles[i];
     }
 
 }

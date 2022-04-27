@@ -1,11 +1,13 @@
 export default class Style2 {
-    constructor(pointList) {
-        this.pointList = pointList;
-        this.cols = width;
+    constructor(point) {
+        this.index = point;
+        
+        this.cols = width; 
         this.rows = height;
         this.dampening = 1;
         this.current = new Array(this.cols).fill(0).map(n => new Array(this.rows).fill(0));
         this.previous = new Array(this.cols).fill(0).map(n => new Array(this.rows).fill(0));
+        this.background = [255,0,0];
     }
 
     draw() {
@@ -36,4 +38,5 @@ export default class Style2 {
     update() {
         
     }
+
 }

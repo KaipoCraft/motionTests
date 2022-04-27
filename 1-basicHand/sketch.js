@@ -5,9 +5,6 @@ let height = 720;
 
 let mp = new Mediapipe();
 mp.runMediapipe();
-if (mp.index != null) {
-    console.log(mp.index);
-}
 
 
 window.setup = function() {
@@ -16,7 +13,11 @@ window.setup = function() {
 
 window.draw = function() {
     background(220);
-    //console.log(mp.indexTipPoint);
+
+    if (mp.index != null) {
+        console.log(mp.index);
+    }
+
 }
 
 const hands = new Hands({locateFile: (file) => {
