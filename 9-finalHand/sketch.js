@@ -62,11 +62,11 @@ window.draw = function() {
         let btn = new Button(btnPoint, drawStyle.styleNum,'Style ' + i);
         btn.draw();
 
-        for (let j = 0; j < indexPoints.length; j++) {
-            if (indexPoints[j].y >= btn.area[0]
-                && indexPoints[j].x <= btn.area[1]
-                && indexPoints[j].y <= btn.area[2]
-                && indexPoints[j].x >= btn.area[3]) 
+        //for (let j = 0; j < indexPoints.length; j++) {
+            if (indexPoints.y >= btn.area[0]
+                && indexPoints.x <= btn.area[1]
+                && indexPoints.y <= btn.area[2]
+                && indexPoints.x >= btn.area[3]) 
             {
                 console.log("Button " + i + " pressed!");
                 btn.activated();
@@ -74,10 +74,10 @@ window.draw = function() {
                 drawStyle.empty();
                 //let newStyle = i;
                 //drawStyle.updateStyle = newStyle;
-                drawStyle.setStyleIndex = i;
+                drawStyle.setStyleIndex = i-1;
                 
             }
-        }
+        //}
     }
     
     drawStyle.drawCurStyle();

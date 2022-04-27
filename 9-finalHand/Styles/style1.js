@@ -4,17 +4,21 @@ export default class Style1 {
         this.index = point;
 
         this.linePoints = [];
-        this.thickness = 1;
+        this.thickness = 3;
         this.xoff = 0;
         this.amp = 20;
         this.linePoint;
         this.background = [0,0,255];
+        this.color = color(255,255,255);
     }
 
     // Draws lines that sweep across the screen in a ribbon-like pattern
     draw() {
-        noFill();
+        push();
         beginShape();
+        strokeWeight(this.thickness);
+        stroke(this.color);
+        noFill();
         
         if (this.index != null) {
 
@@ -27,20 +31,18 @@ export default class Style1 {
                     this.linePoints.splice(curPoint, 1);
                 }
             }
-            // for (let i = 0; i < this.linePoints; i++) {
-            //     console.log(this.linePoints[i]);
-            // }
             
         }
 
         endShape();
+        pop();
     }
 
     set indexPoint(point) {
-        // if (point != null) {
-        //     this.indexPoint = point;
         this.index = point;
-        // }
+    }
+    set pointList(pointList) {
+        this.linePoints = pointList;
     }
 
 }

@@ -17,7 +17,7 @@ export default class StyleMaster {
     }
 
     empty() {
-        this.indexPointList.splice(0);
+        this.curStyle.pointList = [];
     }
 
     get styleNum() {

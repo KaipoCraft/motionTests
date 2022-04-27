@@ -1,0 +1,19 @@
+.input_video {
+    width: 300px;
+    position: absolute;
+    display: block;
+    z-index: 1;
+}
+
+.output_canvas {
+    transform: scaleX(-1);
+}
+
+.container {
+    position: absolute;
+}
+
+canvas {
+    position: absolute;
+}
+

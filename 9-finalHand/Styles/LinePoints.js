@@ -3,17 +3,16 @@ export default class LinePoints {
         this.point = point;
         this.width = width;
         this.height = height;
-        this.start = 0;
-        this.y;
         this.inc = 0.01;
-        this.xoff = 0;
-        this.noise = map(noise(this.point.x), 0, 1, -5, 5);
     }
 
+
+    // Use 2D perlin noise to create a "chased" object
+    // Line lerps towards that point
+
     draw() {
-        console.log(this.point);
         if (this.point.x != null) {
-            //ellipse(this.point.x, this.point.y, 20);
+            //vertex(this.point.x, this.point.y);
             vertex(this.point.x, this.point.y);
         }
     }
@@ -23,11 +22,21 @@ export default class LinePoints {
 
             this.point.x += 10;
 
-            // this.calcNoise;
-            // this.point.y += this.noise;
-            // this.point.y += map(this.point.x, 0, width, -10, 10)
-            //for (let x = this.point.x; x < this.point.length; )
+            this.point.y += this.calcNoise();
+
         }
+    }
+
+    calcNoise() {
+        let y;
+        let xoff1 = 0;
+        let xoff2 = 10000;
+        let noise1 = map(noise(xoff1), 0, 1, 0, 20);
+        let noise2 = map(noise(xoff2), 0, 1, -20, 0);
+        y = noise1 + noise2;
+        xoff1 += this.inc;
+        xoff2 += this.inc;
+        return y;
     }
 
     finished() {
