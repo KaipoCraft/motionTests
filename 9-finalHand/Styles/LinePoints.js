@@ -22,7 +22,7 @@ export default class LinePoints {
 
             this.point.x += 10;
 
-            this.point.y += this.calcNoise();
+            // this.point.y += this.calcNoise();
 
         }
     }

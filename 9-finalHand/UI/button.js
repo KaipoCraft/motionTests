@@ -3,11 +3,13 @@ export default class Button {
     constructor(point, btnNum, label) {
         this.point = point;
         this.btnNum = btnNum;
+        this.label = label;
+  
         this.width = 500/btnNum;
         this.height = 500/btnNum;
-        this.color = [255];
+        this.color = 255;
+        this.activeColor = color(10 * btnNum, 10 * btnNum, 0);
         this.thickness = 5;
-        this.label = label;
         this.active = false;
     }
 
@@ -15,7 +17,7 @@ export default class Button {
         push();
             stroke(this.color);
             strokeWeight(this.thickness);
-            fill(255, 75);
+            fill(this.color, 75);
             rect(this.point.x, this.point.y, this.width, this.height);
 
             // Label
@@ -30,6 +32,12 @@ export default class Button {
         pop();
     }
 
+    activated() {
+        fill(this.activeColor);
+        noStroke();
+        rect(this.point.x, this.point.y, this.width, this.height);
+    }
+    
     get area() {
         // returns the edges of the button
         let topEdge = this.point.y
@@ -39,10 +47,5 @@ export default class Button {
         let a = [topEdge, leftEdge, btmEdge, rightEdge];
         return a;
     }
-
-    activated() {
-        fill(0);
-        noStroke();
-        rect(this.point.x, this.point.y, this.width, this.height);
-    }
+    
 }

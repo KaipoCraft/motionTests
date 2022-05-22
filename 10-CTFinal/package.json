@@ -1,0 +1,9 @@
+{
+    "name": "basic-socket",
+    "description": "Sample arduino Node communication",
+    "authors": "author",
+    "version": "0.0.1",
+    "dependencies": {
+        "serialport": "^9.0.1"
+    }
+}

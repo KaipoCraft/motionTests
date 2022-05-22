@@ -11,7 +11,7 @@ export default class Pointer {
     }
 
     draw() {
-        
+
         if (this.point != null) {
             push();
                 translate(this.point.x, this.point.y);
@@ -34,35 +34,6 @@ export default class Pointer {
                 pop();
             pop();
         }
-        // for (let i = 0; i < this.point.length; i++) {
-
-        //     if (this.point[i].x != null) {
-            
-        //     push();
-        //         translate(this.point[i].x, this.point[i].y);
-            
-        //         push();
-        //             noFill();
-        //             stroke(this.color);
-        //             strokeWeight(3);
-        //             this.setLineDash([6, 10]);
-        //             rotate(this.angle);
-        //             ellipse(0, 0, this.r*2);
-        //         pop();
-
-        //         push();
-        //             scale(-1,1);
-        //             translate(this.r, -this.r);
-        //             textSize(30);
-        //             fill(this.color);
-        //             text('index', 0, 0);
-        //         pop();
-
-        //     pop();
-
-        //     }
-
-        // }
         
         this.update();
     }

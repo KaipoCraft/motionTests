@@ -15,7 +15,7 @@ window.draw = function() {
     background(220);
 
     if (mp.index != null) {
-        console.log(mp.index);
+        //console.log(mp.index);
     }
 
 }

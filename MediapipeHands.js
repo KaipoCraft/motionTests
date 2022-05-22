@@ -12,45 +12,50 @@ export default class Mediapipe {
     runMediapipe() {
         window.onResults = (results) => {
             if (results.multiHandLandmarks) {
-                for (const landmarks of results.multiHandLandmarks) {
-                    push();
-                    let c = color(250,250,250);
-                    let i = 0;
-        
-                    do {
-                        fill(c);
-                        let x = landmarks[i].x*width;
-                        let y = landmarks[i].y*height;
-                        let z = landmarks[i].z;
-                        ellipse(x,y,this.handThickness);
-                        i++
-                    }
-                    while (i < landmarks.length);
-        
-                    stroke(c);
-                    strokeWeight(this.handThickness+1);
-                    var palm = [0,1,5,9,13,17];
-                    for (var j = 0; j < landmarks.length; j++) {
-                        let x = landmarks[j].x*width;
-                        let y = landmarks[j].y*height;
-        
-                        var isPalm = palm.indexOf(j);
-                        var next;
-                        if (isPalm == -1) {
-                            next = landmarks[j-1];
-                        } else {
-                            next = landmarks[palm[(isPalm+1)%palm.length]];
+                for (let hand = 0; hand < results.multiHandLandmarks.length; hand++) {
+                    
+                    for (const landmarks of results.multiHandLandmarks) {
+                        push();
+                        let c = color(250,250,250);
+                        let i = 0;
+            
+                        do {
+                            fill(c);
+                            let x = landmarks[i].x*width;
+                            let y = landmarks[i].y*height;
+                            let z = landmarks[i].z;
+                            ellipse(x,y,this.handThickness);
+                            i++
                         }
-        
-                        line(x, y, next.x*width, next.y*height);
+                        while (i < landmarks.length);
+            
+                        stroke(c);
+                        strokeWeight(this.handThickness+1);
+                        var palm = [0,1,5,9,13,17];
+                        for (var j = 0; j < landmarks.length; j++) {
+                            let x = landmarks[j].x*width;
+                            let y = landmarks[j].y*height;
+            
+                            var isPalm = palm.indexOf(j);
+                            var next;
+                            if (isPalm == -1) {
+                                next = landmarks[j-1];
+                            } else {
+                                next = landmarks[palm[(isPalm+1)%palm.length]];
+                            }
+            
+                            line(x, y, next.x*width, next.y*height);
 
-                        
+                            
+                        }
+
+                        console.log(landmarks);
+                    
+                        this.indexTipPoint = landmarks[8];
+                        this.thumbTipPoint = landmarks[4];
+
+                        pop();
                     }
-                   
-                    this.indexTipPoint = landmarks[8];
-                    this.thumbTipPoint = landmarks[4];
-
-                    pop();
                 }
             }
         }
